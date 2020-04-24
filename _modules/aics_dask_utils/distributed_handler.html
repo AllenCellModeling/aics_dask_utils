@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aics_dask_utils.distributed_handler &mdash; AICS Dask Utils 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AICS Dask Utils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../aics_dask_utils.html">aics_dask_utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../aics_dask_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../aics_dask_utils.html#module-aics_dask_utils.distributed_handler">aics_dask_utils.distributed_handler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../aics_dask_utils.html#module-aics_dask_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../cluster_deployments.html">Cluster Deployments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cluster_deployments.html#localcluster">LocalCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cluster_deployments.html#aics-slurm-cluster">AICS SLURM Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cluster_deployments.html#aws-fargate-cluster">AWS Fargate Cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../cluster_deployments.html#example-dockerfile">Example Dockerfile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AICS Dask Utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../aics_dask_utils.html">aics_dask_utils</a> &raquo;</li>
+        
+      <li>aics_dask_utils.distributed_handler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aics_dask_utils.distributed_handler</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">Future</span> <span class="k">as</span> <span class="n">ThreadFuture</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span> <span class="k">as</span> <span class="n">ThreadClient</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span> <span class="k">as</span> <span class="n">DaskClient</span>
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Future</span> <span class="k">as</span> <span class="n">DaskFuture</span>
+
+<span class="c1">#######################################################################################</span>
+
+
+<div class="viewcode-block" id="DistributedHandler"><a class="viewcode-back" href="../../aics_dask_utils.html#aics_dask_utils.distributed_handler.DistributedHandler">[docs]</a><span class="k">class</span> <span class="nc">DistributedHandler</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A wrapper around concurrent.futures.ThreadPoolExecutor and distributed.Client to</span>
+<span class="sd">    make moving from debugging to dask distribution easier and includes additional</span>
+<span class="sd">    utility functions to manage large iterable mapping.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    address: Optional[str]</span>
+<span class="sd">        A scheduler address to connect to.</span>
+<span class="sd">        Default: None (Use ThreadPoolExeuctor)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Use local machine threads for concurrency</span>
+
+<span class="sd">    &gt;&gt;&gt; from aics_dask_utils import DistributedHandler</span>
+<span class="sd">    ... # `None` address provided means use local machine threads</span>
+<span class="sd">    ... with DistributedHandler(None) as handler:</span>
+<span class="sd">    ...     futures = handler.client.map(</span>
+<span class="sd">    ...         lambda x: x + 1,</span>
+<span class="sd">    ...         [1, 2, 3]</span>
+<span class="sd">    ...     )</span>
+<span class="sd">    ...</span>
+<span class="sd">    ...     results = handler.gather(futures)</span>
+
+<span class="sd">    Use some distributed cluster for concurrency</span>
+
+<span class="sd">    &gt;&gt;&gt; from distributed import LocalCluster</span>
+<span class="sd">    ... cluster = LocalCluster()</span>
+<span class="sd">    ...</span>
+<span class="sd">    ... # Actual address provided means use the dask scheduler</span>
+<span class="sd">    ... with DistributedHandler(cluster.scheduler_address) as handler:</span>
+<span class="sd">    ...     futures = handler.client.map(</span>
+<span class="sd">    ...         lambda x: x + 1,</span>
+<span class="sd">    ...         [1, 2, 3]</span>
+<span class="sd">    ...     )</span>
+<span class="sd">    ...</span>
+<span class="sd">    ...     results = handler.gather(futures)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Create client based off address existance</span>
+        <span class="k">if</span> <span class="n">address</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ThreadClient</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">DaskClient</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pointer to the ThreadPoolExecutor or the Distributed Client.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+
+<div class="viewcode-block" id="DistributedHandler.batched_map"><a class="viewcode-back" href="../../aics_dask_utils.html#aics_dask_utils.distributed_handler.DistributedHandler.batched_map">[docs]</a>    <span class="k">def</span> <span class="nf">batched_map</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map a function across iterables in a batched fashion.</span>
+
+<span class="sd">        If the iterables are of length 1000, but the batch size is 10, it will</span>
+<span class="sd">        process and _complete_ 10 at a time. Other batch implementations relate</span>
+<span class="sd">        to how the tasks are submitted to the scheduler itself. See `batch_size`</span>
+<span class="sd">        parameter on the `distributed.Client.map`:</span>
+<span class="sd">        https://distributed.dask.org/en/latest/api.html#distributed.Client.map</span>
+
+<span class="sd">        This function should be used over `DistributedHandler.client.map` if the map</span>
+<span class="sd">        operation would result in more than hundreds of thousands of tasks being placed</span>
+<span class="sd">        on the scheduler.</span>
+
+<span class="sd">        See: https://github.com/dask/distributed/issues/2181 for more details</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        func: Callable</span>
+<span class="sd">            A serializable callable function to run across each iterable set.</span>
+<span class="sd">        iterables: Iterables</span>
+<span class="sd">            List-like objects to map over. They should have the same length.</span>
+<span class="sd">        batch_size: int</span>
+<span class="sd">            Number of items to process and _complete_ in a single batch.</span>
+<span class="sd">        **kwargs: dict</span>
+<span class="sd">            Other keyword arguments to pass down to this handler&#39;s client.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        results: Iterable[Any]</span>
+<span class="sd">            The complete results of all items after they have been fully processed</span>
+<span class="sd">            and gathered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterables</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">batch_size</span><span class="p">):</span>
+            <span class="n">this_batch_iterables</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">iterable</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">:</span>
+                <span class="n">this_batch_iterables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iterable</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">])</span>
+
+            <span class="n">futures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">this_batch_iterables</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,)</span>
+
+            <span class="n">results</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="DistributedHandler.gather"><a class="viewcode-back" href="../../aics_dask_utils.html#aics_dask_utils.distributed_handler.DistributedHandler.gather">[docs]</a>    <span class="k">def</span> <span class="nf">gather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">futures</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ThreadFuture</span><span class="p">,</span> <span class="n">DaskFuture</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Block until all futures are complete and return in a list of results.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        futures: Iterable[Union[ThreadFuture, DaskFuture]]</span>
+<span class="sd">            An iterable of futures object returned from DistributedHandler.client.map.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        results: List[Any]</span>
+<span class="sd">            The result of each future in a list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">ThreadClient</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DistributedHandler.close"><a class="viewcode-back" href="../../aics_dask_utils.html#aics_dask_utils.distributed_handler.DistributedHandler.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close whichever client this handler is holding open.</span>
+
+<span class="sd">        Note: If connected to a Distributed.Client, it will close the client connection</span>
+<span class="sd">        but will not shutdown the cluster.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">ThreadClient</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jackson Maxfield Brown
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

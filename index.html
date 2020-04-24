@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to AICS Dask Utils’s documentation! &mdash; AICS Dask Utils 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> AICS Dask Utils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aics_dask_utils.html">aics_dask_utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aics_dask_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aics_dask_utils.html#module-aics_dask_utils.distributed_handler">aics_dask_utils.distributed_handler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aics_dask_utils.html#module-aics_dask_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cluster_deployments.html">Cluster Deployments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cluster_deployments.html#localcluster">LocalCluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_deployments.html#aics-slurm-cluster">AICS SLURM Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_deployments.html#aws-fargate-cluster">AWS Fargate Cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cluster_deployments.html#example-dockerfile">Example Dockerfile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">AICS Dask Utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to AICS Dask Utils’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-aics-dask-utils-s-documentation">
+<h1>Welcome to AICS Dask Utils’s documentation!<a class="headerlink" href="#welcome-to-aics-dask-utils-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="aics-dask-utils">
+<h1>AICS Dask Utils<a class="headerlink" href="#aics-dask-utils" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://github.com/AllenCellModeling/aics_dask_utils/actions"><img alt="Build Status" src="https://github.com/AllenCellModeling/aics_dask_utils/workflows/Build%20Master/badge.svg" /></a>
+<a class="reference external image-reference" href="https://AllenCellModeling.github.io/aics_dask_utils"><img alt="Documentation" src="https://github.com/AllenCellModeling/aics_dask_utils/workflows/Documentation/badge.svg" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/AllenCellModeling/aics_dask_utils"><img alt="Code Coverage" src="https://codecov.io/gh/AllenCellModeling/aics_dask_utils/branch/master/graph/badge.svg" /></a>
+<p>Documentation related to Dask, Distributed, and related packages.
+Utility functions commonly used by AICS projects.</p>
+<hr class="docutils" />
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Distributed handler to manage various debugging or cluster configurations</p></li>
+<li><p>Documentation on example cluster deployments</p></li>
+</ul>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>Before we jump into quick starts there are some basic definitions to understand.</p>
+<div class="section" id="task">
+<h3>Task<a class="headerlink" href="#task" title="Permalink to this headline">¶</a></h3>
+<p>A task is a single static function to be processed. Simple enough. However, relevant to
+AICS, is that when using <code class="docutils literal notranslate"><span class="pre">aicsimageio</span></code> (and / or <code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code>), your image (or
+<code class="docutils literal notranslate"><span class="pre">dask.array.Array</span></code>) is split up into <em>many</em> tasks. This is dependent on the image reader
+and the size of the file you are reading. But in general it is safe to assume that each
+image you read is split many thousands of tasks. If you want to see how many tasks your
+image is split into you can either compute:</p>
+<ol class="arabic simple">
+<li><p>Psuedo-code: <code class="docutils literal notranslate"><span class="pre">sum(2</span> <span class="pre">*</span> <span class="pre">size(channel)</span> <span class="pre">for</span> <span class="pre">channel</span> <span class="pre">if</span> <span class="pre">channel</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">[&quot;Y&quot;,</span> <span class="pre">&quot;X&quot;])</span></code></p></li>
+<li><p>Dask graph length: <code class="docutils literal notranslate"><span class="pre">len(AICSImage.dask_data.__dask_graph__())</span></code></p></li>
+</ol>
+</div>
+<div class="section" id="map">
+<h3>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<p>Apply a given function to the provided iterables as used as parameters to the function.
+Given <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, the result of <code class="docutils literal notranslate"><span class="pre">map(func,</span> <span class="pre">*iterables)</span></code> in this
+case would be <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">3,</span> <span class="pre">4]</span></code>. Usually, you are provided back an iterable of <code class="docutils literal notranslate"><span class="pre">future</span></code>
+objects back from a <code class="docutils literal notranslate"><span class="pre">map</span></code> operation. The results from the map operation are not
+guaranteed to be in the order of the iterable that went in as operations are started as
+resources become available and item to item variance may result in different output
+ordering.</p>
+</div>
+<div class="section" id="future">
+<h3>Future<a class="headerlink" href="#future" title="Permalink to this headline">¶</a></h3>
+<p>An object that will become available but is currently not defined. There is no guarantee
+that the object is a valid result or an error and you should handle errors once the
+future’s state has resolved (usually this means after a <code class="docutils literal notranslate"><span class="pre">gather</span></code> operation).</p>
+</div>
+<div class="section" id="gather">
+<h3>Gather<a class="headerlink" href="#gather" title="Permalink to this headline">¶</a></h3>
+<p>Block the process from moving forward until all futures are resolved. Control flow here
+would mean that you</p>
+<div class="section" id="other-comments">
+<h4>Other Comments<a class="headerlink" href="#other-comments" title="Permalink to this headline">¶</a></h4>
+<p>Dask tries to mirror the standard library <code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code> wherever possible which
+is what allows for this library to have simple wrappers around Dask to allow for easy
+debugging as we are simply swapping out <code class="docutils literal notranslate"><span class="pre">distributed.Client.map</span></code> with
+<code class="docutils literal notranslate"><span class="pre">concurrent.futures.ThreadPoolExecutor.map</span></code> for example. If at any point in your code
+you don’t want to use <code class="docutils literal notranslate"><span class="pre">dask</span></code> for some reason or another, it is equally valid to use
+<code class="docutils literal notranslate"><span class="pre">concurrent.futures.ThreadPoolExecutor</span></code> or <code class="docutils literal notranslate"><span class="pre">concurrent.futures.ProcessPoolExecutor</span></code>.</p>
+<div class="section" id="basic-mapping-with-distributed-handler">
+<h5>Basic Mapping with Distributed Handler<a class="headerlink" href="#basic-mapping-with-distributed-handler" title="Permalink to this headline">¶</a></h5>
+<p>If you have an iterable (or iterables) that would result in less than hundreds of
+thousands of tasks, it you can simply use the normal <code class="docutils literal notranslate"><span class="pre">map</span></code> provided by the
+<code class="docutils literal notranslate"><span class="pre">DistributedHandler.client</span></code>.</p>
+<p><strong>Important Note:</strong> Notice, “… iterable that would <em>result</em> in less than hundreds
+of thousands of tasks…”. This is important because what happens when you try to <code class="docutils literal notranslate"><span class="pre">map</span></code>
+over a thousand image paths, each which spawns an <code class="docutils literal notranslate"><span class="pre">AICSImage</span></code> object. Each one adds
+thousands more tasks to the scheduler to complete. This will break and you should look
+to <a class="reference external" href="#large-iterable-batching">Large Iterable Batching</a> instead.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aics_dask_utils</span> <span class="kn">import</span> <span class="n">DistributedHandler</span>
+
+<span class="c1"># `None` address provided means use local machine threads</span>
+<span class="k">with</span> <span class="n">DistributedHandler</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+    <span class="n">futures</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">LocalCluster</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+
+<span class="c1"># Actual address provided means use the dask scheduler</span>
+<span class="k">with</span> <span class="n">DistributedHandler</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">scheduler_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+    <span class="n">futures</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h5>Large Iterable Batching<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
+<p>If you have an iterable (or iterables) that would result in more than hundreds of
+thousands of tasks, you should use <code class="docutils literal notranslate"><span class="pre">handler.batched_map</span></code> to reduce the load on the
+client. This will batch your requests rather than send than all at once.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aics_dask_utils</span> <span class="kn">import</span> <span class="n">DistributedHandler</span>
+
+<span class="c1"># `None` address provided means use local machine threads</span>
+<span class="k">with</span> <span class="n">DistributedHandler</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">batched_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mf">1e9</span><span class="p">)</span> <span class="c1"># 1 billion</span>
+    <span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">LocalCluster</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+
+<span class="c1"># Actual address provided means use the dask scheduler</span>
+<span class="k">with</span> <span class="n">DistributedHandler</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">scheduler_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">handler</span><span class="p">:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">batched_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mf">1e9</span><span class="p">)</span> <span class="c1"># 1 billion</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> Notice that there is no <code class="docutils literal notranslate"><span class="pre">handler.gather</span></code> call after <code class="docutils literal notranslate"><span class="pre">batched_map</span></code>. This is
+because <code class="docutils literal notranslate"><span class="pre">batched_map</span></code> gathers results at the end of each batch rather than simply
+returning their future’s.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Stable Release:</strong> <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">aics_dask_utils</span></code><span class="raw-html-m2r"><br></span>
+<strong>Development Head:</strong> <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+https://github.com/AllenCellModeling/aics_dask_utils.git</span></code></p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>For full package documentation please visit
+<a class="reference external" href="https://AllenCellModeling.github.io/aics_dask_utils">AllenCellModeling.github.io/aics_dask_utils</a>.</p>
+</div>
+<div class="section" id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="CONTRIBUTING.md">CONTRIBUTING.md</a> for information related to developing the code.</p>
+</div>
+<div class="section" id="additional-comments">
+<h2>Additional Comments<a class="headerlink" href="#additional-comments" title="Permalink to this headline">¶</a></h2>
+<p>This README, provided tooling, and documentation are not meant to be all encompassing
+of the various operations you can do with <code class="docutils literal notranslate"><span class="pre">dask</span></code> and other similar computing systems.
+For further reading go to <a class="reference external" href="https://dask.org/">dask.org</a>.</p>
+<p><strong>Free software: Allen Institute Software License</strong></p>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jackson Maxfield Brown
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

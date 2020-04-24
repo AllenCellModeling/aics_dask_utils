@@ -1,0 +1,22 @@
+aics\_dask\_utils package
+=========================
+
+Submodules
+----------
+
+aics\_dask\_utils.distributed\_handler module
+---------------------------------------------
+
+.. automodule:: aics_dask_utils.distributed_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aics_dask_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
