@@ -43,7 +43,9 @@ future's state has resolved (usually this means after a `gather` operation).
 
 #### Gather
 Block the process from moving forward until all futures are resolved. Control flow here
-would mean that you
+would mean that you could potentially generate thousands of futures and keep moving on
+locally while those futures slowly resolve but if you ever want a hard stop and wait for
+some set of futures to complete, you would need gather them.
 
 ##### Other Comments
 Dask tries to mirror the standard library `concurrent.futures` wherever possible which
