@@ -14,6 +14,7 @@ client = Client(cluster)
 ## AICS SLURM Cluster
 ```python
 from datetime import datetime
+from pathlib import Path
 
 import dask.config
 from dask_jobqueue import SLURMCluster
@@ -59,7 +60,7 @@ Docker image to [Docker Hub](https://hub.docker.com/).
 from dask_cloudprovider import FargateCluster
 from distributed import Client
 
-# Create connection
+# Create cluster
 cluster = FargateCluster("username/dockerimage")
 
 # Adapt
