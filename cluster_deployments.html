@@ -204,6 +204,7 @@
 <div class="section" id="aics-slurm-cluster">
 <h2>AICS SLURM Cluster<a class="headerlink" href="#aics-slurm-cluster" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">dask.config</span>
 <span class="kn">from</span> <span class="nn">dask_jobqueue</span> <span class="kn">import</span> <span class="n">SLURMCluster</span>
@@ -249,7 +250,7 @@ Docker image to <a class="reference external" href="https://hub.docker.com/">Doc
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask_cloudprovider</span> <span class="kn">import</span> <span class="n">FargateCluster</span>
 <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
 
-<span class="c1"># Create connection</span>
+<span class="c1"># Create cluster</span>
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">FargateCluster</span><span class="p">(</span><span class="s2">&quot;username/dockerimage&quot;</span><span class="p">)</span>
 
 <span class="c1"># Adapt</span>
