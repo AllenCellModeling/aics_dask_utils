@@ -181,12 +181,18 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">Future</span> <span class="k">as</span> <span class="n">ThreadFuture</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span> <span class="k">as</span> <span class="n">ThreadClient</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span> <span class="k">as</span> <span class="n">DaskClient</span>
 <span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Future</span> <span class="k">as</span> <span class="n">DaskFuture</span>
+
+<span class="c1">#######################################################################################</span>
+
+<span class="c1"># Equivalent to the default in ThreadPoolExecutor</span>
+<span class="n">DEFAULT_MAX_THREADS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">5</span>
 
 <span class="c1">#######################################################################################</span>
 
@@ -246,8 +252,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_batch_size</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DaskClient</span><span class="p">,</span> <span class="n">ThreadClient</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an integer that matches either the number of Dask workers or number of</span>
+<span class="sd">        threads available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Handle dask</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">DaskClient</span><span class="p">):</span>
+            <span class="c1"># Using a LocalCluster with processes = False</span>
+            <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">cluster</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">DEFAULT_MAX_THREADS</span>
+
+            <span class="c1"># In all other cases, there will be a cluster attached</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">workers</span><span class="p">)</span>
+
+        <span class="c1"># Return default number of max threads</span>
+        <span class="k">return</span> <span class="n">DEFAULT_MAX_THREADS</span>
+
 <div class="viewcode-block" id="DistributedHandler.batched_map"><a class="viewcode-back" href="../../aics_dask_utils.html#aics_dask_utils.distributed_handler.DistributedHandler.batched_map">[docs]</a>    <span class="k">def</span> <span class="nf">batched_map</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map a function across iterables in a batched fashion.</span>
@@ -270,8 +294,9 @@
 <span class="sd">            A serializable callable function to run across each iterable set.</span>
 <span class="sd">        iterables: Iterables</span>
 <span class="sd">            List-like objects to map over. They should have the same length.</span>
-<span class="sd">        batch_size: int</span>
+<span class="sd">        batch_size: Optional[int]</span>
 <span class="sd">            Number of items to process and _complete_ in a single batch.</span>
+<span class="sd">            Default: number of available workers or threads.</span>
 <span class="sd">        **kwargs: dict</span>
 <span class="sd">            Other keyword arguments to pass down to this handler&#39;s client.</span>
 
@@ -281,6 +306,11 @@
 <span class="sd">            The complete results of all items after they have been fully processed</span>
 <span class="sd">            and gathered.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If no batch size was provided, get batch size based off client</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_batch_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
+
+        <span class="c1"># Batch process iterables</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterables</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">batch_size</span><span class="p">):</span>
             <span class="n">this_batch_iterables</span> <span class="o">=</span> <span class="p">[]</span>

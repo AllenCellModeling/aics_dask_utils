@@ -239,7 +239,7 @@ Default: None (Use ThreadPoolExeuctor)</p>
 </div>
 <dl class="method">
 <dt id="aics_dask_utils.distributed_handler.DistributedHandler.batched_map">
-<code class="sig-name descname">batched_map</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">*iterables</em>, <em class="sig-param">batch_size: int = 10</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span> &#x2192; List[Any]<a class="reference internal" href="_modules/aics_dask_utils/distributed_handler.html#DistributedHandler.batched_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aics_dask_utils.distributed_handler.DistributedHandler.batched_map" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">batched_map</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">*iterables</em>, <em class="sig-param">batch_size: Optional[int] = None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span> &#x2192; List[Any]<a class="reference internal" href="_modules/aics_dask_utils/distributed_handler.html#DistributedHandler.batched_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aics_dask_utils.distributed_handler.DistributedHandler.batched_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map a function across iterables in a batched fashion.</p>
 <p>If the iterables are of length 1000, but the batch size is 10, it will
 process and _complete_ 10 at a time. Other batch implementations relate
@@ -255,7 +255,8 @@ on the scheduler.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>func</strong> (<em>Callable</em>) – A serializable callable function to run across each iterable set.</p></li>
 <li><p><strong>iterables</strong> (<em>Iterables</em>) – List-like objects to map over. They should have the same length.</p></li>
-<li><p><strong>batch_size</strong> (<em>int</em>) – Number of items to process and _complete_ in a single batch.</p></li>
+<li><p><strong>batch_size</strong> (<em>Optional[int]</em>) – Number of items to process and _complete_ in a single batch.
+Default: number of available workers or threads.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Other keyword arguments to pass down to this handler’s client.</p></li>
 </ul>
 </dd>
