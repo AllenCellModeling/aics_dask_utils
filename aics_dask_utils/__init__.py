@@ -13,4 +13,4 @@ def get_module_version():
     return __version__
 
 
-from .distributed_handler import DistributedHandler  # noqa: F401
+from .distributed_handler import DEFAULT_MAX_THREADS, DistributedHandler  # noqa: F401

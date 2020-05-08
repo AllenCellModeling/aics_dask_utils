@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pytest
-from aics_dask_utils import DistributedHandler
-
 from concurrent.futures import ThreadPoolExecutor
+
+import pytest
 from distributed import Client, LocalCluster
+
+from aics_dask_utils import DEFAULT_MAX_THREADS, DistributedHandler
 
 
 @pytest.mark.parametrize(
@@ -69,3 +70,19 @@ def test_distributed_handler_distributed(values, expected_values):
         handler_map_results == handler_batched_results
         and handler_map_results == distributed_results
     )
+
+    cluster.close()
+
+
+def test_get_batch_size_threadpool():
+    with DistributedHandler() as handler:
+        assert handler._get_batch_size(handler.client) == DEFAULT_MAX_THREADS
+
+
+def test_get_batch_size_distributed():
+    cluster = LocalCluster(processes=False)
+
+    with DistributedHandler(cluster.scheduler_address) as handler:
+        assert handler._get_batch_size(handler.client) == DEFAULT_MAX_THREADS
+
+    cluster.close()
