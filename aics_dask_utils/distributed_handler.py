@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from concurrent.futures import Future as ThreadFuture
 from concurrent.futures import ThreadPoolExecutor as ThreadClient
 from typing import Any, Iterable, List, Optional, Union
 
 from distributed import Client as DaskClient
 from distributed import Future as DaskFuture
+
+#######################################################################################
+
+# Equivalent to the default in ThreadPoolExecutor
+DEFAULT_MAX_THREADS = os.cpu_count() * 5
 
 #######################################################################################
 
@@ -66,8 +72,26 @@ class DistributedHandler:
         """
         return self._client
 
+    @staticmethod
+    def _get_batch_size(client: Union[DaskClient, ThreadClient]) -> int:
+        """
+        Returns an integer that matches either the number of Dask workers or number of
+        threads available.
+        """
+        # Handle dask
+        if isinstance(client, DaskClient):
+            # Using a LocalCluster with processes = False
+            if client.cluster is None:
+                return DEFAULT_MAX_THREADS
+
+            # In all other cases, there will be a cluster attached
+            return len(client.cluster.workers)
+
+        # Return default number of max threads
+        return DEFAULT_MAX_THREADS
+
     def batched_map(
-        self, func, *iterables, batch_size: int = 10, **kwargs,
+        self, func, *iterables, batch_size: Optional[int] = None, **kwargs,
     ) -> List[Any]:
         """
         Map a function across iterables in a batched fashion.
@@ -90,8 +114,9 @@ class DistributedHandler:
             A serializable callable function to run across each iterable set.
         iterables: Iterables
             List-like objects to map over. They should have the same length.
-        batch_size: int
+        batch_size: Optional[int]
             Number of items to process and _complete_ in a single batch.
+            Default: number of available workers or threads.
         **kwargs: dict
             Other keyword arguments to pass down to this handler's client.
 
@@ -101,6 +126,11 @@ class DistributedHandler:
             The complete results of all items after they have been fully processed
             and gathered.
         """
+        # If no batch size was provided, get batch size based off client
+        if batch_size is None:
+            batch_size = self._get_batch_size(self.client)
+
+        # Batch process iterables
         results = []
         for i in range(0, len(iterables[0]), batch_size):
             this_batch_iterables = []
