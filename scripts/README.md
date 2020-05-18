@@ -16,7 +16,7 @@ cd aics_dask_utils
 conda create --name aics_dask_utils python=3.7 -y
 conda activate aics_dask_utils
 pip install -e .[deepcheck]
-python scripts/check_aics_cluster
+python scripts/check_aics_cluster.py
 ```
 
 Dask worker logs from each check will be placed in:
