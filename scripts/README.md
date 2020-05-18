@@ -18,3 +18,6 @@ conda activate aics_dask_utils
 pip install -e .[deepcheck]
 python scripts/check_aics_cluster
 ```
+
+Dask worker logs from each check will be placed in:
+`.dask_logs/{check_name}/{timestamp_cluster_spawned}/`
