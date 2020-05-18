@@ -49,17 +49,27 @@ requirements = [
     "distributed>=2.12.0",
 ]
 
+deepcheck_requirements = [
+    "aicsimageio>=3.2.0",
+    "bokeh>=2.0.2",
+    "dask>=2.16.0",
+    "dask_jobqueue>=0.7.1",
+    "imageio>=2.8.0",
+]
+
 extra_requirements = {
     "test": test_requirements,
     "setup": setup_requirements,
     "dev": dev_requirements,
     "interactive": interactive_requirements,
+    "deepcheck": deepcheck_requirements,
     "all": [
         *requirements,
         *test_requirements,
         *setup_requirements,
         *dev_requirements,
         *interactive_requirements,
+        *deepcheck_requirements,
     ],
 }
 
@@ -76,9 +86,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     description="Utility functions and documentation related to Dask and AICS",
-    entry_points={
-        "console_scripts": ["my_example=aics_dask_utils.bin.my_example:main"],
-    },
+    entry_points={},
     install_requires=requirements,
     license="Allen Institute Software License",
     long_description=readme,
