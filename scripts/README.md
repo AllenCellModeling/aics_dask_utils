@@ -1,0 +1,20 @@
+# Scripts
+
+## check_aics_cluster.py
+
+A script to run deep checks on the AICS SLURM cluster and it's interactions with Dask.
+It checks:
+* All SLURM nodes (or at least many SLURM nodes)
+* `distributed.Client.wait_for_workers` to ensure that all nodes start up as workers
+* IO checks with `aicsimageio>=3.2.0` to ensure that Dask IO isn't failing on any worker
+
+### Full Commands to Run (start on SLURM master)
+```bash
+srun -c 8 --mem 40GB -p aics_cpu_general --pty bash
+git clone git@github.com:AllenCellModeling/aics_dask_utils.git
+cd aics_dask_utils
+conda create --name aics_dask_utils python=3.7 -y
+conda activate aics_dask_utils
+pip install -e .[deepcheck]
+python scripts/check_aics_cluster
+```
