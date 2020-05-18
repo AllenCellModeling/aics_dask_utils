@@ -155,7 +155,7 @@ def run_image_read_checks(args: Args, client: Client):
     client.cluster.scale(args.n_workers)
 
     # Get test image path
-    source_image = Path(__file__).parent / "resource" / "example.ome.tiff"
+    source_image = Path(__file__).parent / "resources" / "example.ome.tiff"
 
     # Run check iterations
     log.info("Starting read image iterations...")
