@@ -179,13 +179,13 @@ def test_small_workers(caplog, cores_per_worker: int, n_workers: int):
     caplog.set_level(logging.INFO)
     deep_cluster_check(
         cores_per_worker=cores_per_worker,
-        memory_per_worker=[f"{cpw * 4}GB" for cpw in cores_per_worker],
+        memory_per_worker=f"{cores_per_worker * 4}GB",
         n_workers=n_workers,
     )
 
 
 @pytest.mark.parametrize("cores_per_worker", [1, 2, 4, 8, 16])
-def test_large_workers(caplog, cores_per_worker: int, n_workers: int):
+def test_large_workers(caplog, cores_per_worker: int):
     """
     Run the deep cluster check with small workers.
     Memory per worker is set 160GB for all tests to lock down a single node.
