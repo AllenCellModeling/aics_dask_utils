@@ -161,7 +161,7 @@ def deep_cluster_check(
 
 @pytest.mark.parametrize("cores_per_worker", [1, 2, 4])
 @pytest.mark.parametrize("n_workers", [12, 24, 32, 64, 128])
-def test_small_workers(caplog, cores_per_worker: int, n_workers: int):
+def test_small_workers(cores_per_worker: int, n_workers: int):
     """
     Run the deep cluster check with small workers.
     Memory per worker is set to 4 * cores per worker.
