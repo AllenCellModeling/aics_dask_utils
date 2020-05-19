@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import argparse
-import json
 import logging
 import signal
 import time
-import traceback
 from datetime import datetime
 from pathlib import Path
 
@@ -20,17 +17,22 @@ from imageio import imwrite
 from aics_dask_utils import DistributedHandler
 
 ###############################################################################
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s",
+)
+log = logging.getLogger(__name__)
+
+###############################################################################
 # Test function definitions
 
 
 def spawn_cluster(
-    cluster_type: str,
-    cores_per_worker: int,
-    memory_per_worker: str,
-    n_workers: int
+    cluster_type: str, cores_per_worker: int, memory_per_worker: str, n_workers: int
 ) -> Client:
     # Create or get log dir
-    log_dir_name = f"c_{cores}-mem_{memory}-workers_{n_workers}"
+    log_dir_name = f"c_{cores_per_worker}-mem_{memory_per_worker}-workers_{n_workers}"
     log_dir_time = datetime.now().isoformat().split(".")[0]  # Do not include ms
     log_dir = Path(
         f".dask_logs/{log_dir_time}/{log_dir_name}/{cluster_type}"
@@ -39,15 +41,13 @@ def spawn_cluster(
     log_dir.mkdir(parents=True, exist_ok=True)
 
     # Configure dask config
-    dask.config.set(
-        {"scheduler.work-stealing": False}
-    )
+    dask.config.set({"scheduler.work-stealing": False})
 
     # Create cluster
     log.info("Creating SLURMCluster")
     cluster = SLURMCluster(
-        cores=cores,
-        memory=memory,
+        cores=cores_per_worker,
+        memory=memory_per_worker,
         queue="aics_cpu_general",
         walltime="10:00:00",
         local_directory=str(log_dir),
@@ -122,7 +122,7 @@ def deep_cluster_check(
     cores_per_worker: int,
     memory_per_worker: str,
     n_workers: int,
-    timeout: int = 600  # seconds
+    timeout: int = 600,  # seconds
 ):
     log.info("Checking wait for workers...")
     log.info("Spawning SLURMCluster...")
@@ -162,6 +162,7 @@ def deep_cluster_check(
 
     log.info("All checks complete")
 
+
 ########################################################################################
 # Actual tests
 
@@ -196,7 +197,5 @@ def test_large_workers(caplog, cores_per_worker: int):
     """
     caplog.set_level(logging.INFO)
     deep_cluster_check(
-        cores_per_worker=cores_per_worker,
-        memory_per_worker="160GB",
-        n_workers=22,
+        cores_per_worker=cores_per_worker, memory_per_worker="160GB", n_workers=22,
     )
