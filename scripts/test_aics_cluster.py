@@ -196,7 +196,8 @@ def test_large_workers(cores_per_worker: int):
 
 
 def main():
-    pytest.main()
+    test_small_workers()
+    test_large_workers()
 
 
 ###############################################################################
