@@ -55,6 +55,8 @@ deepcheck_requirements = [
     "dask>=2.16.0",
     "dask_jobqueue>=0.7.1",
     "imageio>=2.8.0",
+    "pytest>=4.3.0",
+    "pytest-runner>=4.4",
 ]
 
 extra_requirements = {

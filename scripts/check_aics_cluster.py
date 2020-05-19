@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import json
 import logging
 import signal
 import time
@@ -10,6 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 import dask.config
+import pytest
 from aicsimageio import AICSImage
 from dask_jobqueue import SLURMCluster
 from distributed import Client
@@ -18,72 +20,21 @@ from imageio import imwrite
 from aics_dask_utils import DistributedHandler
 
 ###############################################################################
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s",
-)
-log = logging.getLogger(__name__)
-
-###############################################################################
-# Args
+# Test function definitions
 
 
-class Args(argparse.Namespace):
-    def __init__(self):
-        self.__parse()
-
-    def __parse(self):
-        # Setup parser
-        p = argparse.ArgumentParser(
-            prog="check_aics_cluster",
-            description=(
-                "Run a deep check on the AICS SLURM cluster to ensure that all nodes "
-                "are accessible."
-            ),
-        )
-
-        # Arguments
-        p.add_argument(
-            "-i",
-            "--iterations",
-            type=int,
-            default=500,
-            dest="iterations",
-            help=("Number of times the file should be loaded and saved."),
-        )
-        p.add_argument(
-            "-t",
-            "--wait-for-workers-timeout",
-            type=int,
-            default=600,
-            dest="timeout",
-            help=(
-                "Number of seconds to wait before cancelling a wait_for_workers call."
-            ),
-        )
-        p.add_argument(
-            "-n",
-            "--n-workers",
-            type=int,
-            default=22,
-            dest="n_workers",
-            help=("Number of dask workers to create."),
-        )
-
-        # Parse
-        p.parse_args(namespace=self)
-
-
-###############################################################################
-# Check function definitions
-
-
-def spawn_cluster(args: Args, cluster_type: str) -> Client:
+def spawn_cluster(
+    cluster_type: str,
+    cores_per_worker: int,
+    memory_per_worker: str,
+    n_workers: int
+) -> Client:
     # Create or get log dir
-    # Do not include ms
-    log_dir_name = datetime.now().isoformat().split(".")[0]
-    log_dir = Path(f".dask_logs/{cluster_type}/{log_dir_name}").expanduser()
+    log_dir_name = f"c_{cores}-mem_{memory}-workers_{n_workers}"
+    log_dir_time = datetime.now().isoformat().split(".")[0]  # Do not include ms
+    log_dir = Path(
+        f".dask_logs/{log_dir_time}/{log_dir_name}/{cluster_type}"
+    ).expanduser()
     # Log dir settings
     log_dir.mkdir(parents=True, exist_ok=True)
 
@@ -95,8 +46,8 @@ def spawn_cluster(args: Args, cluster_type: str) -> Client:
     # Create cluster
     log.info("Creating SLURMCluster")
     cluster = SLURMCluster(
-        cores=4,
-        memory="160GB",  # One worker per node
+        cores=cores,
+        memory=memory,
         queue="aics_cpu_general",
         walltime="10:00:00",
         local_directory=str(log_dir),
@@ -114,19 +65,19 @@ def signal_handler(signum, frame):
     raise TimeoutError()
 
 
-def run_wait_for_workers_check(args: Args, client: Client):
+def run_wait_for_workers_check(client: Client, timeout: int, n_workers: int):
     # `client.wait_for_workers` is a blocking function, this signal library
     # allows wrapping blocking statements in handlers to check for other stuff
     try:
         log.info("Starting wait for workers check...")
         # Setup signal check for timeout duration
         signal.signal(signal.SIGALRM, signal_handler)
-        signal.alarm(args.timeout)
-        log.info(f"Will wait for: {args.timeout} seconds")
+        signal.alarm(timeout)
+        log.info(f"Will wait for: {timeout} seconds")
 
         # Actual wait for workers
-        client.cluster.scale(args.n_workers)
-        client.wait_for_workers(args.n_workers)
+        client.cluster.scale(n_workers)
+        client.wait_for_workers(n_workers)
 
         # Close signal
         signal.alarm(0)
@@ -150,9 +101,9 @@ def run_iteration(file: Path, save_path: Path) -> Path:
     return save_path
 
 
-def run_image_read_checks(args: Args, client: Client):
+def run_image_read_checks(client: Client, n_workers: int):
     # Spawn workers
-    client.cluster.scale(args.n_workers)
+    client.cluster.scale(n_workers)
 
     # Get test image path
     source_image = Path(__file__).parent / "resources" / "example.ome.tiff"
@@ -162,59 +113,90 @@ def run_image_read_checks(args: Args, client: Client):
     with DistributedHandler(client.cluster.scheduler_address) as handler:
         handler.batched_map(
             run_iteration,
-            [source_image for i in range(args.iterations)],
-            [source_image.parent / f"{i}.png" for i in range(args.iterations)],
+            [source_image for i in range(10000)],
+            [source_image.parent / f"{i}.png" for i in range(10000)],
         )
 
 
-def run_all_checks(args: Args):
-    # Try running the entire check
-    try:
-        log.info("Checking wait for workers...")
-        log.info("Spawning SLURMCluster...")
-        client = spawn_cluster(args, "wait_for_workers")
-        run_wait_for_workers_check(args, client)
+def deep_cluster_check(
+    cores_per_worker: int,
+    memory_per_worker: str,
+    n_workers: int,
+    timeout: int = 600  # seconds
+):
+    log.info("Checking wait for workers...")
+    log.info("Spawning SLURMCluster...")
+    client = spawn_cluster(
+        cluster_type="wait_for_workers",
+        cores_per_worker=cores_per_worker,
+        memory_per_worker=memory_per_worker,
+        n_workers=n_workers,
+    )
+    run_wait_for_workers_check(client=client, timeout=timeout, n_workers=n_workers)
 
-        log.info("Wait for workers check done. Tearing down cluster.")
-        client.shutdown()
-        client.close()
-        log.info("=" * 80)
+    log.info("Wait for workers check done. Tearing down cluster.")
+    client.shutdown()
+    client.close()
+    log.info("=" * 80)
 
-        log.info("Waiting a bit for full cluster teardown")
-        time.sleep(120)
+    log.info("Waiting a bit for full cluster teardown")
+    time.sleep(120)
 
-        log.info("Checking IO iterations...")
-        log.info("Spawning SLURMCluster...")
-        client = spawn_cluster(args, "io_iterations")
-        run_image_read_checks(args, client)
+    log.info("Checking IO iterations...")
+    log.info("Spawning SLURMCluster...")
+    client = spawn_cluster(
+        cluster_type="io_iterations",
+        cores_per_worker=cores_per_worker,
+        memory_per_worker=memory_per_worker,
+        n_workers=n_workers,
+    )
+    # Log time duration
+    start = time.perf_counter()
+    run_image_read_checks(client=client, n_workers=n_workers)
+    log.info(f"IO checks completed in: {time.perf_counter() - start} seconds")
 
-        log.info("IO iteration checks done. Tearing down cluster.")
-        client.shutdown()
-        client.close()
-        log.info("=" * 80)
+    log.info("IO iteration checks done. Tearing down cluster.")
+    client.shutdown()
+    client.close()
+    log.info("=" * 80)
 
-        log.info("All checks complete")
+    log.info("All checks complete")
 
-    # Catch any exception
-    except Exception as e:
-        log.error("=============================================")
-        log.error("\n\n" + traceback.format_exc())
-        log.error("=============================================")
-        log.error("\n\n" + str(e) + "\n")
-        log.error("=============================================")
-
-
-###############################################################################
-# Runner
-
-
-def main():
-    args = Args()
-    run_all_checks(args)
+########################################################################################
+# Actual tests
 
 
-###############################################################################
-# Allow caller to directly run this module (usually in development scenarios)
+@pytest.mark.parametrize("cores_per_worker", [1, 2, 4])
+@pytest.mark.parametrize("n_workers", [12, 24, 32, 64, 128])
+def test_small_workers(caplog, cores_per_worker: int, n_workers: int):
+    """
+    Run the deep cluster check with small workers.
+    Memory per worker is set to 4 * cores per worker.
+    Timeout is default to deep cluster check default.
 
-if __name__ == "__main__":
-    main()
+    This is to test the scaling of Dask on SLURM.
+    """
+    caplog.set_level(logging.INFO)
+    deep_cluster_check(
+        cores_per_worker=cores_per_worker,
+        memory_per_worker=[f"{cpw * 4}GB" for cpw in cores_per_worker],
+        n_workers=n_workers,
+    )
+
+
+@pytest.mark.parametrize("cores_per_worker", [1, 2, 4, 8, 16])
+def test_large_workers(caplog, cores_per_worker: int, n_workers: int):
+    """
+    Run the deep cluster check with small workers.
+    Memory per worker is set 160GB for all tests to lock down a single node.
+    N Workers is set to 22, the number of nodes listed as "IDLE" + "MIX" from `sinfo`.
+    Timeout is default to deep cluster check default.
+
+    This is to test that all nodes of the cluster are available.
+    """
+    caplog.set_level(logging.INFO)
+    deep_cluster_check(
+        cores_per_worker=cores_per_worker,
+        memory_per_worker="160GB",
+        n_workers=22,
+    )
