@@ -189,3 +189,18 @@ def test_large_workers(cores_per_worker: int):
     deep_cluster_check(
         cores_per_worker=cores_per_worker, memory_per_worker="160GB", n_workers=22,
     )
+
+
+###############################################################################
+# Runner
+
+
+def main():
+    pytest.main()
+
+
+###############################################################################
+# Allow caller to directly run this module (usually in development scenarios)
+
+if __name__ == "__main__":
+    main()
