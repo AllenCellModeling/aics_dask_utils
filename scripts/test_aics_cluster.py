@@ -123,48 +123,52 @@ def deep_cluster_check(
     n_workers: int,
     timeout: int = 600,  # seconds
 ):
-    log.info(f"Running tests with config: {locals()}")
+    try:
+        log.info(f"Running tests with config: {locals()}")
 
-    log.info("Checking wait for workers...")
-    log.info("Spawning SLURMCluster...")
-    client = spawn_cluster(
-        cluster_type="wait_for_workers",
-        cores_per_worker=cores_per_worker,
-        memory_per_worker=memory_per_worker,
-        n_workers=n_workers,
-    )
-    run_wait_for_workers_check(client=client, timeout=timeout, n_workers=n_workers)
+        log.info("Checking wait for workers...")
+        log.info("Spawning SLURMCluster...")
+        client = spawn_cluster(
+            cluster_type="wait_for_workers",
+            cores_per_worker=cores_per_worker,
+            memory_per_worker=memory_per_worker,
+            n_workers=n_workers,
+        )
+        run_wait_for_workers_check(client=client, timeout=timeout, n_workers=n_workers)
 
-    log.info("Wait for workers check done. Tearing down cluster.")
-    client.shutdown()
-    client.close()
-    log.info("-" * 80)
+        log.info("Wait for workers check done. Tearing down cluster.")
+        client.shutdown()
+        client.close()
+        log.info("-" * 80)
 
-    log.info("Waiting a bit for full cluster teardown")
-    time.sleep(120)
+        log.info("Waiting a bit for full cluster teardown")
+        time.sleep(120)
 
-    log.info("Checking IO iterations...")
-    log.info("Spawning SLURMCluster...")
-    client = spawn_cluster(
-        cluster_type="io_iterations",
-        cores_per_worker=cores_per_worker,
-        memory_per_worker=memory_per_worker,
-        n_workers=n_workers,
-    )
-    # Log time duration
-    start = time.perf_counter()
-    run_image_read_checks(client=client, n_workers=n_workers)
-    log.info(f"IO checks completed in: {time.perf_counter() - start} seconds")
+        log.info("Checking IO iterations...")
+        log.info("Spawning SLURMCluster...")
+        client = spawn_cluster(
+            cluster_type="io_iterations",
+            cores_per_worker=cores_per_worker,
+            memory_per_worker=memory_per_worker,
+            n_workers=n_workers,
+        )
+        # Log time duration
+        start = time.perf_counter()
+        run_image_read_checks(client=client, n_workers=n_workers)
+        log.info(f"IO checks completed in: {time.perf_counter() - start} seconds")
 
-    log.info("IO iteration checks done. Tearing down cluster.")
-    client.shutdown()
-    client.close()
-    log.info("-" * 80)
+        log.info("IO iteration checks done. Tearing down cluster.")
+        client.shutdown()
+        client.close()
+        log.info("-" * 80)
 
-    log.info("Waiting a bit for full cluster teardown")
-    time.sleep(120)
+        log.info("Waiting a bit for full cluster teardown")
+        time.sleep(120)
 
-    log.info("All checks complete")
+        log.info("All checks complete")
+    except Exception as e:
+        log.error(f"An error occurred:")
+        log.error(e)
 
 
 ########################################################################################
