@@ -69,7 +69,6 @@ def run_wait_for_workers_check(client: Client, timeout: int, n_workers: int):
     # `client.wait_for_workers` is a blocking function, this signal library
     # allows wrapping blocking statements in handlers to check for other stuff
     try:
-        log.info("Starting wait for workers check...")
         # Setup signal check for timeout duration
         signal.signal(signal.SIGALRM, signal_handler)
         signal.alarm(timeout)
@@ -108,7 +107,6 @@ def run_image_read_checks(client: Client, n_workers: int):
     source_image = Path(__file__).parent / "resources" / "example.ome.tiff"
 
     # Run check iterations
-    log.info("Starting read image iterations...")
     with DistributedHandler(client.cluster.scheduler_address) as handler:
         handler.batched_map(
             run_iteration,
