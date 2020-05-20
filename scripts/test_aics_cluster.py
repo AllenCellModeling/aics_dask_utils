@@ -179,7 +179,6 @@ def test_small_workers():
 
     This is to test the scaling of Dask on SLURM.
     """
-                               # cores    # workers
     params = itertools.product([1, 2, 4], [12, 24, 32, 64, 128])
     for cores_per_worker, n_workers in params:
         deep_cluster_check(
