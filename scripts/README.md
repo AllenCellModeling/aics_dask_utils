@@ -7,6 +7,7 @@ It checks:
 * All SLURM nodes (or at least many SLURM nodes)
 * `distributed.Client.wait_for_workers` to ensure that all nodes start up as workers
 * IO checks with `aicsimageio>=3.2.0` to ensure that Dask IO isn't failing on any worker
+* Timings for completing the 10000 IO iterations against the various cluster configs
 
 ### Full Commands to Run (start on SLURM master)
 ```bash
@@ -20,4 +21,4 @@ python scripts/check_aics_cluster.py
 ```
 
 Dask worker logs from each check will be placed in:
-`.dask_logs/{check_name}/{timestamp_cluster_spawned}/`
+`.dask_logs/{cluster_creation_time}/{config}/{test_type}`
