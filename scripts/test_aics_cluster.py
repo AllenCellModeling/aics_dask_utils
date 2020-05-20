@@ -124,6 +124,8 @@ def deep_cluster_check(
     n_workers: int,
     timeout: int = 600,  # seconds
 ):
+    log.info(f"Running tests with config: {locals()}")
+
     log.info("Checking wait for workers...")
     log.info("Spawning SLURMCluster...")
     client = spawn_cluster(
