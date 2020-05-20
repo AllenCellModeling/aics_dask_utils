@@ -159,7 +159,10 @@ def deep_cluster_check(
     log.info("IO iteration checks done. Tearing down cluster.")
     client.shutdown()
     client.close()
-    log.info("=" * 80)
+    log.info("-" * 80)
+
+    log.info("Waiting a bit for full cluster teardown")
+    time.sleep(120)
 
     log.info("All checks complete")
 
