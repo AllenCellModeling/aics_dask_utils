@@ -73,7 +73,6 @@ def run_wait_for_workers_check(client: Client, timeout: int, n_workers: int):
         # Setup signal check for timeout duration
         signal.signal(signal.SIGALRM, signal_handler)
         signal.alarm(timeout)
-        log.info(f"Will wait for: {timeout} seconds")
 
         # Actual wait for workers
         client.cluster.scale(n_workers)
@@ -139,7 +138,7 @@ def deep_cluster_check(
     log.info("Wait for workers check done. Tearing down cluster.")
     client.shutdown()
     client.close()
-    log.info("=" * 80)
+    log.info("-" * 80)
 
     log.info("Waiting a bit for full cluster teardown")
     time.sleep(120)
@@ -185,6 +184,7 @@ def test_small_workers():
             memory_per_worker=f"{cores_per_worker * 4}GB",
             n_workers=n_workers,
         )
+        log.info("=" * 80)
 
 
 def test_large_workers():
@@ -200,6 +200,7 @@ def test_large_workers():
         deep_cluster_check(
             cores_per_worker=cores_per_worker, memory_per_worker="160GB", n_workers=22,
         )
+        log.info("=" * 80)
 
 
 ###############################################################################
