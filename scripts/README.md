@@ -2,7 +2,7 @@
 
 ## check_aics_cluster.py
 
-A script to run deep checks on the AICS SLURM cluster and it's interactions with Dask.
+A script to run deep checks on the AICS SLURM cluster and its interactions with Dask.
 It checks:
 * All SLURM nodes (or at least many SLURM nodes)
 * `distributed.Client.wait_for_workers` to ensure that all nodes start up as workers
