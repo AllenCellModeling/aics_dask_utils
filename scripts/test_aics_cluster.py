@@ -17,6 +17,9 @@ from imageio import imwrite
 from aics_dask_utils import DistributedHandler
 from aicsimageio import AICSImage
 
+# Configure dask config
+dask.config.set({"scheduler.work-stealing": False})
+
 ###############################################################################
 
 logging.basicConfig(
@@ -40,9 +43,6 @@ def spawn_cluster(
     ).expanduser()
     # Log dir settings
     log_dir.mkdir(parents=True, exist_ok=True)
-
-    # Configure dask config
-    dask.config.set({"scheduler.work-stealing": False})
 
     # Create cluster
     log.info("Creating SLURMCluster")
