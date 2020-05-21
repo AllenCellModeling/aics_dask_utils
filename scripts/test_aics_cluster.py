@@ -235,13 +235,13 @@ def test_large_workers():
     Run the deep cluster check with small workers.
     Cores per worker is set to 1 for simplicitly.
     Memory per worker is set 160GB for all tests to lock down a single node.
-    N Workers is set to 22, the number of nodes listed as "IDLE" + "MIX" from `sinfo`.
+    N Workers is set to 20, the number of nodes listed as "IDLE" + "MIX" from `sinfo`.
     Timeout is default to deep cluster check default.
 
     This is to test that all nodes of the cluster are available.
     """
     deep_cluster_check(
-        cores_per_worker=1, memory_per_worker="160GB", n_workers=22,
+        cores_per_worker=1, memory_per_worker="160GB", n_workers=20,
     )
     log.info("=" * 80)
 
