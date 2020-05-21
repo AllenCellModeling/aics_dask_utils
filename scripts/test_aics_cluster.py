@@ -197,11 +197,13 @@ def test_small_workers():
         )
         log.info("=" * 80)
 
-        results.append({
-            "cores_per_worker": cores_per_worker,
-            "n_workers": n_workers,
-            "completion_time": completion_time,
-        })
+        results.append(
+            {
+                "cores_per_worker": cores_per_worker,
+                "n_workers": n_workers,
+                "completion_time": completion_time,
+            }
+        )
 
     # Get best config
     best = None
@@ -209,11 +211,11 @@ def test_small_workers():
         if config["completion_time"] is not None:
             if (
                 # Handle starting case
-                (best is None) or
+                (best is None)
                 # Handle new better case
-                (
-                    best is not None and
-                    config["completion_time"] < best["completion_time"]
+                or (
+                    best is not None
+                    and config["completion_time"] < best["completion_time"]
                 )
             ):
                 best = config
