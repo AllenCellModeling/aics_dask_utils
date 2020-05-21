@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import itertools
+import json
 import logging
 import signal
 import time
@@ -9,12 +10,12 @@ from datetime import datetime
 from pathlib import Path
 
 import dask.config
-from aicsimageio import AICSImage
 from dask_jobqueue import SLURMCluster
 from distributed import Client
 from imageio import imwrite
 
 from aics_dask_utils import DistributedHandler
+from aicsimageio import AICSImage
 
 ###############################################################################
 
@@ -121,6 +122,7 @@ def deep_cluster_check(
     n_workers: int,
     timeout: int = 600,  # seconds
 ):
+    completion_time = None
     try:
         log.info(f"Running tests with config: {locals()}")
 
@@ -153,7 +155,8 @@ def deep_cluster_check(
         # Log time duration
         start = time.perf_counter()
         run_image_read_checks(client=client, n_workers=n_workers)
-        log.info(f"IO checks completed in: {time.perf_counter() - start} seconds")
+        completion_time = time.perf_counter() - start
+        log.info(f"IO checks completed in: {completion_time} seconds")
 
         log.info("IO iteration checks done. Tearing down cluster.")
         client.shutdown()
@@ -168,6 +171,8 @@ def deep_cluster_check(
         log.error(f"An error occurred:")
         log.error(e)
 
+    return completion_time
+
 
 ########################################################################################
 # Actual tests
@@ -181,14 +186,46 @@ def test_small_workers():
 
     This is to test the scaling of Dask on SLURM.
     """
+    # Run tests
+    results = []
     params = itertools.product([1, 2, 4], [12, 64, 128, 256])
     for cores_per_worker, n_workers in params:
-        deep_cluster_check(
+        completion_time = deep_cluster_check(
             cores_per_worker=cores_per_worker,
             memory_per_worker=f"{cores_per_worker * 4}GB",
             n_workers=n_workers,
         )
         log.info("=" * 80)
+
+        results.append({
+            "cores_per_worker": cores_per_worker,
+            "n_workers": n_workers,
+            "completion_time": completion_time,
+        })
+
+    # Get best config
+    best = None
+    for config in results:
+        if config["completion_time"] is not None:
+            if (
+                # Handle starting case
+                (best is None) or
+                # Handle new better case
+                (
+                    best is not None and
+                    config["completion_time"] < best["completion_time"]
+                )
+            ):
+                best = config
+
+    # Log best config
+    log.info("=" * 80)
+    log.info(f"Cluster config with lowest IO completion_time: {best}")
+    log.info("=" * 80)
+
+    # Save results
+    with open("aics_cluster_time_results.json", "w") as write_out:
+        json.dump(results, write_out)
 
 
 def test_large_workers():
@@ -212,8 +249,11 @@ def test_large_workers():
 
 
 def main():
-    test_small_workers()
     test_large_workers()
+    log.info("=" * 80)
+    log.info("All nodes checked, moving on to cluster config checks.")
+    log.info("=" * 80)
+    test_small_workers()
 
 
 ###############################################################################
