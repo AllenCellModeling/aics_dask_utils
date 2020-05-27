@@ -10,12 +10,12 @@ from datetime import datetime
 from pathlib import Path
 
 import dask.config
+from aicsimageio import AICSImage
 from dask_jobqueue import SLURMCluster
 from distributed import Client
 from imageio import imwrite
 
 from aics_dask_utils import DistributedHandler
-from aicsimageio import AICSImage
 
 # Configure dask config
 dask.config.set({"scheduler.work-stealing": False})
@@ -188,7 +188,7 @@ def test_small_workers():
     """
     # Run tests
     results = []
-    params = itertools.product([1, 2, 4], [12, 64, 128, 256])
+    params = itertools.product([1, 2, 4], [12, 64, 128])
     for cores_per_worker, n_workers in params:
         completion_time = deep_cluster_check(
             cores_per_worker=cores_per_worker,
