@@ -64,6 +64,8 @@ def signal_handler(signum, frame):
 
 
 def run_wait_for_workers_check(client: Client, timeout: int, n_workers: int):
+    log.info("Checking wait for workers...")
+
     # `client.wait_for_workers` is a blocking function, this signal library
     # allows wrapping blocking statements in handlers to check for other stuff
     try:
@@ -80,6 +82,8 @@ def run_wait_for_workers_check(client: Client, timeout: int, n_workers: int):
         log.info("Successfully waited for workers!")
     except TimeoutError:
         log.error("Timed out wait for workers check")
+
+    log.info("Wait for workers check done.")
 
 
 def run_iteration(file: Path, save_path: Path) -> Path:
@@ -104,6 +108,9 @@ def run_image_read_checks(client: Client, n_workers: int):
     # Get test image path
     source_image = Path(__file__).parent / "resources" / "example.ome.tiff"
 
+    # Log time duration
+    start = time.perf_counter()
+
     # Run check iterations
     with DistributedHandler(client.cluster.scheduler_address) as handler:
         handler.batched_map(
@@ -112,18 +119,22 @@ def run_image_read_checks(client: Client, n_workers: int):
             [source_image.parent / f"{i}.png" for i in range(10000)],
         )
 
+    completion_time = time.perf_counter() - start
+    log.info(f"IO checks completed in: {completion_time} seconds")
+
+    return completion_time
+
 
 def deep_cluster_check(
     cores_per_worker: int,
     memory_per_worker: str,
     n_workers: int,
-    timeout: int = 600,  # seconds
+    timeout: int = 120,  # seconds
 ):
     completion_time = None
     try:
         log.info(f"Running tests with config: {locals()}")
 
-        log.info("Checking wait for workers...")
         log.info("Spawning SLURMCluster...")
         client = spawn_cluster(
             cluster_type="wait_for_workers",
@@ -131,31 +142,11 @@ def deep_cluster_check(
             memory_per_worker=memory_per_worker,
             n_workers=n_workers,
         )
+
         run_wait_for_workers_check(client=client, timeout=timeout, n_workers=n_workers)
-
-        log.info("Wait for workers check done. Tearing down cluster.")
-        client.shutdown()
-        client.close()
-        log.info("-" * 80)
-
-        log.info("Waiting a bit for full cluster teardown")
-        time.sleep(30)
-
-        log.info("Checking IO iterations...")
-        log.info("Spawning SLURMCluster...")
-        client = spawn_cluster(
-            cluster_type="io_iterations",
-            cores_per_worker=cores_per_worker,
-            memory_per_worker=memory_per_worker,
-            n_workers=n_workers,
-        )
-        # Log time duration
-        start = time.perf_counter()
         run_image_read_checks(client=client, n_workers=n_workers)
-        completion_time = time.perf_counter() - start
-        log.info(f"IO checks completed in: {completion_time} seconds")
 
-        log.info("IO iteration checks done. Tearing down cluster.")
+        log.info("Tearing down cluster.")
         client.shutdown()
         client.close()
         log.info("-" * 80)
