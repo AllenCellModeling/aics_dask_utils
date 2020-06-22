@@ -139,7 +139,7 @@ def deep_cluster_check(
         log.info("-" * 80)
 
         log.info("Waiting a bit for full cluster teardown")
-        time.sleep(120)
+        time.sleep(30)
 
         log.info("Checking IO iterations...")
         log.info("Spawning SLURMCluster...")
@@ -161,7 +161,7 @@ def deep_cluster_check(
         log.info("-" * 80)
 
         log.info("Waiting a bit for full cluster teardown")
-        time.sleep(120)
+        time.sleep(30)
 
         log.info("All checks complete")
     except Exception as e:
