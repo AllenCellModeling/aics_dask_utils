@@ -146,7 +146,7 @@ def deep_cluster_check(
         )
 
         run_wait_for_workers_check(client=client, timeout=timeout, n_workers=n_workers)
-        run_image_read_checks(client=client, n_workers=n_workers)
+        completion_time = run_image_read_checks(client=client, n_workers=n_workers)
 
         log.info("Tearing down cluster.")
         client.shutdown()
