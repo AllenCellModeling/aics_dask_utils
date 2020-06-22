@@ -46,7 +46,7 @@ interactive_requirements = [
 ]
 
 requirements = [
-    "distributed>=2.12.0",
+    "distributed>=2.19.0",
 ]
 
 deepcheck_requirements = [
