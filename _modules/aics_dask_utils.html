@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
@@ -48,7 +49,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> AICS Dask Utils
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> AICS Dask Utils
           
 
           
@@ -75,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -118,6 +120,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -156,7 +159,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">Module code</a> &raquo;</li>
         
@@ -180,6 +183,8 @@
 
 <span class="sd">&quot;&quot;&quot;Top-level package for AICS Dask Utils.&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">.distributed_handler</span> <span class="kn">import</span> <span class="n">DEFAULT_MAX_THREADS</span><span class="p">,</span> <span class="n">DistributedHandler</span>  <span class="c1"># noqa: F401</span>
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Jackson Maxfield Brown&quot;</span>
 <span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;jacksonb@alleninstitute.org&quot;</span>
 <span class="c1"># Do not edit this string manually, always use bumpversion</span>
@@ -189,9 +194,6 @@
 
 <div class="viewcode-block" id="get_module_version"><a class="viewcode-back" href="../aics_dask_utils.html#aics_dask_utils.get_module_version">[docs]</a><span class="k">def</span> <span class="nf">get_module_version</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">__version__</span></div>
-
-
-<span class="kn">from</span> <span class="nn">.distributed_handler</span> <span class="kn">import</span> <span class="n">DEFAULT_MAX_THREADS</span><span class="p">,</span> <span class="n">DistributedHandler</span>  <span class="c1"># noqa: F401</span>
 </pre></div>
 
            </div>
@@ -204,11 +206,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, Jackson Maxfield Brown
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -219,7 +229,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
