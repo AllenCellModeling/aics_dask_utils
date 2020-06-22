@@ -17,9 +17,6 @@ from imageio import imwrite
 
 from aics_dask_utils import DistributedHandler
 
-# Configure dask config
-dask.config.set({"scheduler.work-stealing": False})
-
 ###############################################################################
 
 logging.basicConfig(
