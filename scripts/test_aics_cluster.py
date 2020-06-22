@@ -102,7 +102,9 @@ def run_iteration(file: Path, save_path: Path) -> Path:
 
 
 def run_image_read_checks(client: Client, n_workers: int):
-    # Spawn workers
+    log.info("Checking IO iterations...")
+
+    # Spawn workers if they aren't all there
     client.cluster.scale(n_workers)
 
     # Get test image path
